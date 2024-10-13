@@ -1,0 +1,11 @@
+C:\Users\artem\source\repos\MyArrayList_Class\MyArrayList_Class\bin\Debug\net8.0\MyArrayList_Class.deps.json
+C:\Users\artem\source\repos\MyArrayList_Class\MyArrayList_Class\bin\Debug\net8.0\MyArrayList_Class.dll
+C:\Users\artem\source\repos\MyArrayList_Class\MyArrayList_Class\bin\Debug\net8.0\MyArrayList_Class.pdb
+C:\Users\artem\source\repos\MyArrayList_Class\MyArrayList_Class\obj\Debug\net8.0\MyArrayList_Class.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\artem\source\repos\MyArrayList_Class\MyArrayList_Class\obj\Debug\net8.0\MyArrayList_Class.AssemblyInfoInputs.cache
+C:\Users\artem\source\repos\MyArrayList_Class\MyArrayList_Class\obj\Debug\net8.0\MyArrayList_Class.AssemblyInfo.cs
+C:\Users\artem\source\repos\MyArrayList_Class\MyArrayList_Class\obj\Debug\net8.0\MyArrayList_Class.csproj.CoreCompileInputs.cache
+C:\Users\artem\source\repos\MyArrayList_Class\MyArrayList_Class\obj\Debug\net8.0\MyArrayList_Class.dll
+C:\Users\artem\source\repos\MyArrayList_Class\MyArrayList_Class\obj\Debug\net8.0\refint\MyArrayList_Class.dll
+C:\Users\artem\source\repos\MyArrayList_Class\MyArrayList_Class\obj\Debug\net8.0\MyArrayList_Class.pdb
+C:\Users\artem\source\repos\MyArrayList_Class\MyArrayList_Class\obj\Debug\net8.0\ref\MyArrayList_Class.dll
