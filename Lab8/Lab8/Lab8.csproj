@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="MyVector\**" />
+    <EmbeddedResource Remove="MyVector\**" />
+    <None Remove="MyVector\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="MyVector">
+      <HintPath>..\..\..\..\Desktop\C#\GitHUB\Lab6\MyVector\MyVector\bin\Debug\net8.0\MyVector.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
