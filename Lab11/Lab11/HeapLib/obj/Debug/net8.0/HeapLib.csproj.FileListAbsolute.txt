@@ -1,0 +1,15 @@
+C:\Users\artem\source\repos\HeapLib\HeapLib\bin\Debug\net8.0\HeapLib.deps.json
+C:\Users\artem\source\repos\HeapLib\HeapLib\bin\Debug\net8.0\HeapLib.dll
+C:\Users\artem\source\repos\HeapLib\HeapLib\bin\Debug\net8.0\HeapLib.pdb
+C:\Users\artem\source\repos\HeapLib\HeapLib\bin\Debug\net8.0\MyArrayList_Class.dll
+C:\Users\artem\source\repos\HeapLib\HeapLib\bin\Debug\net8.0\MyArrayList_Class.pdb
+C:\Users\artem\source\repos\HeapLib\HeapLib\obj\Debug\net8.0\HeapLib.csproj.AssemblyReference.cache
+C:\Users\artem\source\repos\HeapLib\HeapLib\obj\Debug\net8.0\HeapLib.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\artem\source\repos\HeapLib\HeapLib\obj\Debug\net8.0\HeapLib.AssemblyInfoInputs.cache
+C:\Users\artem\source\repos\HeapLib\HeapLib\obj\Debug\net8.0\HeapLib.AssemblyInfo.cs
+C:\Users\artem\source\repos\HeapLib\HeapLib\obj\Debug\net8.0\HeapLib.csproj.CoreCompileInputs.cache
+C:\Users\artem\source\repos\HeapLib\HeapLib\obj\Debug\net8.0\HeapLib.csproj.Up2Date
+C:\Users\artem\source\repos\HeapLib\HeapLib\obj\Debug\net8.0\HeapLib.dll
+C:\Users\artem\source\repos\HeapLib\HeapLib\obj\Debug\net8.0\refint\HeapLib.dll
+C:\Users\artem\source\repos\HeapLib\HeapLib\obj\Debug\net8.0\HeapLib.pdb
+C:\Users\artem\source\repos\HeapLib\HeapLib\obj\Debug\net8.0\ref\HeapLib.dll
