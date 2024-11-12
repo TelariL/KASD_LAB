@@ -109,11 +109,11 @@
             Array.Copy(elementData, result, size);
             return result;
         }
-        public void ToArray(ref T[] a)
+        public T[] ToArray(ref T[] a)
         {
             if (a == null)  a=ToArray();
             Array.Copy(elementData, a, size);
-
+            return a;
         }
         public void Add(int index, T e)
         {

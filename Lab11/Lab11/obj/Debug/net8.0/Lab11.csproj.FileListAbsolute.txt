@@ -18,3 +18,11 @@ C:\Users\artem\source\repos\Lab11\Lab11\obj\Debug\net8.0\refint\Lab11.dll
 C:\Users\artem\source\repos\Lab11\Lab11\obj\Debug\net8.0\Lab11.pdb
 C:\Users\artem\source\repos\Lab11\Lab11\obj\Debug\net8.0\Lab11.genruntimeconfig.cache
 C:\Users\artem\source\repos\Lab11\Lab11\obj\Debug\net8.0\ref\Lab11.dll
+C:\Users\artem\Desktop\C#\GitHUB\Lab11\Lab11\obj\Debug\net8.0\Lab11.csproj.AssemblyReference.cache
+C:\Users\artem\Desktop\C#\GitHUB\Lab11\Lab11\obj\Debug\net8.0\Lab11.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\artem\Desktop\C#\GitHUB\Lab11\Lab11\obj\Debug\net8.0\Lab11.AssemblyInfoInputs.cache
+C:\Users\artem\Desktop\C#\GitHUB\Lab11\Lab11\obj\Debug\net8.0\Lab11.AssemblyInfo.cs
+C:\Users\artem\Desktop\C#\GitHUB\Lab11\Lab11\obj\Debug\net8.0\Lab11.csproj.CoreCompileInputs.cache
+C:\Users\artem\Desktop\C#\GitHUB\Lab11\Lab11\obj\Debug\net8.0\Lab11.dll
+C:\Users\artem\Desktop\C#\GitHUB\Lab11\Lab11\obj\Debug\net8.0\refint\Lab11.dll
+C:\Users\artem\Desktop\C#\GitHUB\Lab11\Lab11\obj\Debug\net8.0\Lab11.pdb

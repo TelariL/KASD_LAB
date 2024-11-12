@@ -1,20 +1,17 @@
-﻿using HeapLib;
-using MyArrayList_Class;
+﻿using MyArrayList_Class;
 namespace Lab11
 {
     public class MyPriorityQueue<T> where T : IComparable<T>
     {
-        private MyArrayList<T> queue; // Внутренняя очередь с приоритетами
-        private int size; // Количество элементов в очереди с приоритетами
-        private Comparer<T> comparator; // Компаратор для сравнения элементов в очереди с приоритетами
-        // Создание пустой очереди с приоритетами с начальной ёмкостью 11
+        private MyArrayList<T> queue;
+        private int size;
+        private Comparer<T> comparator;
         public MyPriorityQueue()
         {
             queue = new MyArrayList<T>(11);
             size = 0;
-            comparator = Comparer<T>.Default; // Инициализация компаратора (добавляем его и в последующих конструкторах)
+            comparator = Comparer<T>.Default;
         }
-        // Восстановление свойства очереди
         public void Queuelify(int index)
         {
             int left = 2 * index + 1;
@@ -37,7 +34,6 @@ namespace Lab11
                 Queuelify(parent);
             }
         }
-        // Обмен элементов в очереди
         public void Swap(int index1, int index2)
         {
             T temp1 = queue.Get(index1);
@@ -45,7 +41,6 @@ namespace Lab11
             queue.Set(index2, temp1);
             queue.Set(index1, temp2);
         }
-        // Cоздание очереди с приоритетами, содержащей элементы передаваемого массива a
         public MyPriorityQueue(T[] a)
         {
             queue = new MyArrayList<T>(a.Length);
@@ -60,21 +55,18 @@ namespace Lab11
                 Queuelify(i);
             }
         }
-        // Cозданиe пустой очереди с приоритетами с указанной начальной ёмкостью
         public MyPriorityQueue(int initialCcapacity)
         {
             queue = new MyArrayList<T>(initialCcapacity);
             size = 0;
             comparator = Comparer<T>.Default;
         }
-        // Создание пустой очереди с приоритетами с указанной начальной ёмкостью и компаратором
         public MyPriorityQueue(int initialCcapacity, Comparer<T> comparator)
         {
             queue = new MyArrayList<T>(initialCcapacity);
             size = initialCcapacity;
             this.comparator = comparator;
         }
-        // Создание очереди с приоритетами, содержащей элементы указанной очереди с приоритетами
         public MyPriorityQueue(MyPriorityQueue<T> c)
         {
             queue = new MyArrayList<T>(c.size);
@@ -162,15 +154,14 @@ namespace Lab11
         {
             return queue.ToArray();
         }
-        public T[] ToArray(T[] a)
+        public T[] ToArray(ref T[] a)
         {
-            return queue.ToArray(a);
+            return queue.ToArray(ref a);
         }
         public T Element()
         {
             return queue.Get(0);
         }
-        // Добавление элемента obj в очередь с приоритетами. Возвращает true, если obj добавлен, и false в противном случае
         public bool Offer(T obj)
         {
             queue.Add(obj);
@@ -184,13 +175,11 @@ namespace Lab11
             if (queue.Contains(obj)) return f;
             else return f == false;
         }
-        // Возврат элемента из головы очереди с приоритетами без его удаления. Возвращает null, если очередь пуста
         public T Peek()
         {
             if (size == 0) throw new ArgumentOutOfRangeException();
             else return queue.Get(0);
         }
-        // Удаление и возврат элемента из головы очереди с приоритетами. Возвращает null, если очередь пуста
         public T Poll()
         {
             if (size == 0) throw new ArgumentOutOfRangeException();
@@ -206,7 +195,6 @@ namespace Lab11
                 return element;
             }
         }
-        // Вывод очереди с приоритетами
         public void Print()
         {
             for(int i = 0; i < size; i++)

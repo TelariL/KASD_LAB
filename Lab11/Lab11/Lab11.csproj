@@ -8,6 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="HeapLib\**" />
+    <EmbeddedResource Remove="HeapLib\**" />
+    <None Remove="HeapLib\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="HeapLib">
       <HintPath>..\..\HeapLib\HeapLib\bin\Debug\net8.0\HeapLib.dll</HintPath>
     </Reference>
