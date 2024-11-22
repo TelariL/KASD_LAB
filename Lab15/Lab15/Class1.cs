@@ -114,7 +114,7 @@ namespace MyArrayDeque
             elements = newElements;
             tail = newTail;
         }
-        public int Size() => tail+1;
+        public int Size() => tail - head + 1;
         public T[] ToArray()
         {
             T[] array = new T[tail + 1];
