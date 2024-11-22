@@ -1,4 +1,4 @@
-﻿namespace MyArrayDeque
+namespace MyArrayDeque
 {
     public class MyArrayDeque<T>
     {
@@ -16,7 +16,8 @@
             elements = new T[array.Length];
             head = 0;
             int i = 0;
-            foreach (T item in array) {
+            foreach (T item in array)
+            {
                 elements[i] = item;
                 i++;
             }
@@ -32,10 +33,10 @@
         }
         public void Add(T e)
         {
-            if(tail == elements.Length - 1)
+            if (tail == elements.Length - 1)
             {
-                T[] newElements = new T[elements.Length *2];
-                for(int i = 0; i < elements.Length; i++)
+                T[] newElements = new T[elements.Length * 2];
+                for (int i = head; i < elements.Length; i++)
                     newElements[i] = elements[i];
                 elements = newElements;
                 elements[tail++] = e;
@@ -44,17 +45,18 @@
         }
         public void AddAll(T[] a)
         {
-            for (int i = 0; i < a.Length; i++) 
+            for (int i = 0; i < a.Length; i++)
                 Add(a[i]);
         }
         public void Clear()
         {
             tail = 0;
+            head = 0;
         }
         public bool Contains(T o)
         {
-            foreach (T item in elements)
-                if (Equals(item, o)) return true;
+            for(int i = head; i <= tail; i++)
+                if (Equals(elements[i], o)) return true;
             return false;
         }
         public bool ContainsAll(T[] a)
@@ -68,17 +70,28 @@
         {
             if (Contains(o))
             {
-                int index=0;
-                for (int i = 0; i < tail; i++)
+                int index = 0;
+                for (int i = head; i < tail; i++)
                 {
                     if (Equals(elements[i], o)) index = i;
                 }
-                T[] newElements = new T[--tail];
-                for (int i = 0; i < index; i++)
-                    newElements[i] = elements[i];
-                for (int i = index; i < tail; i++)
-                    newElements[i] = elements[i + 1];
-                elements = newElements;
+                if (index == head)
+                {
+                    head++; return;
+                }
+                else if (index == tail)
+                {
+                    tail--; return;
+                }
+                else
+                {
+                    T[] newElements = new T[--tail];
+                    for (int i = head; i < index; i++)
+                        newElements[i] = elements[i];
+                    for (int i = index; i < tail; i++)
+                        newElements[i] = elements[i + 1];
+                    elements = newElements;
+                }
             }
             else throw new Exception("Элемент отсутствует");
         }
@@ -92,7 +105,7 @@
             int newTail = 0;
             T[] newElements = new T[elements.Length];
             for (int i = 0; i < array.Length; i++)
-                for (int j = 0; j <= tail; j++)
+                for (int j = head; j <= tail; j++)
                     if (Equals(elements[j], array[i]))
                     {
                         newElements[newTail] = elements[j];
@@ -101,17 +114,17 @@
             elements = newElements;
             tail = newTail;
         }
-        public int Size() => tail;
+        public int Size() => tail+1;
         public T[] ToArray()
         {
-            T[] array = new T[tail+1];
+            T[] array = new T[tail + 1];
             for (int i = 0; i <= tail; i++) array[i] = elements[i];
             return array;
         }
         public void ToArray(ref T[] array)
         {
             if (array == null) array = ToArray();
-            Array.Copy(elements, array, tail+1);
+            Array.Copy(elements, array, tail + 1);
         }
         public T Element() => elements[head];
         public bool Offer(T obj)
@@ -131,16 +144,16 @@
             else
             {
                 T item = elements[head];
-                Remove(item);
+                head++;
                 return item;
             }
         }
         public void AddFirst(T obj)
         {
             T[] newElements = new T[elements.Length + 1];
-            newElements[0] = obj;
-            for (int i = 0; i <= tail; i++)
-                    newElements[i+1] = elements[i];
+            newElements[head] = obj;
+            for (int i = head; i <= tail; i++)
+                newElements[i + 1] = elements[i];
             elements = newElements;
             tail++;
         }
@@ -165,7 +178,7 @@
         public T Pop()
         {
             T item = elements[head];
-            Remove(item);
+            head++;
             return item;
         }
         public void Push(T obj)
@@ -188,7 +201,7 @@
             else
             {
                 T item = elements[head];
-                Remove(item);
+                head++;
                 return item;
             }
         }
@@ -198,25 +211,23 @@
             else
             {
                 T item = elements[tail];
-                Remove(item);
+                tail--;
                 return item;
             }
         }
         public T RemoveLast()
         {
-            T obj = elements[tail];
-            Remove(elements[tail]);
-            return obj;
+            T item = elements[tail];
+            tail--;
+            return item;
         }
         public T RemoveFirst()
         {
-            T obj = elements[head];
-            Remove(elements[head]);
-            return obj;
+            return Pop();
         }
         public bool RemoveLastOccurrence(T obj)
         {
-            for (int i = tail; i >= 0; i--)
+            for (int i = tail; i >= head; i--)
                 if (Equals(elements[i], obj))
                 {
                     Remove(obj);
@@ -226,13 +237,17 @@
         }
         public bool RemoveFirstOccurrence(T obj)
         {
-            for (int i = 0; i <= tail; i++)
+            for (int i = head; i <= tail; i++)
                 if (Equals(elements[i], obj))
                 {
                     Remove(obj);
                     return true;
                 }
             return false;
+        }
+        public T Get(int index)
+        {
+            return elements[index];
         }
     }
 }
