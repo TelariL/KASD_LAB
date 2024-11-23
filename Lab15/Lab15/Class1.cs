@@ -55,7 +55,7 @@ namespace MyArrayDeque
         }
         public bool Contains(T o)
         {
-            for(int i = head; i <= tail; i++)
+            for (int i = head; i <= tail; i++)
                 if (Equals(elements[i], o)) return true;
             return false;
         }
@@ -114,7 +114,8 @@ namespace MyArrayDeque
             elements = newElements;
             tail = newTail;
         }
-        public int Size() => tail - head + 1;
+        public int IndexOfHead() => head;
+        public int Size() => tail - head;
         public T[] ToArray()
         {
             T[] array = new T[tail + 1];
