@@ -1,4 +1,4 @@
-﻿using MyArrayDeque;
+using MyArrayDeque;
 namespace Lab15
 {
     class program
@@ -27,7 +27,7 @@ namespace Lab15
             string path2 = "output.txt";
             StreamReader sr = new StreamReader(path1);
             MyArrayDeque<string> deque = new MyArrayDeque<string>();
-            string? line = sr.ReadLine();
+            string line = sr.ReadLine();
             if (line != null) { deque.Add(line); }
             while (line != null)
             {
@@ -41,7 +41,7 @@ namespace Lab15
             sr.Close();
 
             StreamWriter sw = new StreamWriter(path2);
-            for (int i = 0; i < deque.Size(); i++)
+            for (int i = deque.IndexOfHead(); i < deque.Size(); i++)
             {
                 sw.WriteLine(deque.Get(i));
             }
@@ -49,7 +49,7 @@ namespace Lab15
 
             Console.WriteLine("Введите кол-во пробелов: ");
             int N = Convert.ToInt32(Console.ReadLine());
-            for (int i = 0; i < deque.Size(); i++)
+            for (int i = deque.IndexOfHead(); i < deque.Size(); i++)
             {
                 if (CountSpace(deque.Get(i)) > N)
                 {
@@ -57,7 +57,7 @@ namespace Lab15
                     i--;
                 }
             }
-            for (int i = 0; i < deque.Size(); i++) 
+            for (int i = deque.IndexOfHead(); i < deque.Size(); i++)
                 Console.WriteLine(deque.Get(i));
         }
     }
