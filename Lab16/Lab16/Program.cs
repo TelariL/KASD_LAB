@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Data;
 
 namespace Task16
@@ -13,7 +13,7 @@ namespace Task16
             public Node(T element)
             {
                 next = null;
-                pred = next;
+                pred = null;
                 value = element;
             }
         }
@@ -33,12 +33,6 @@ namespace Task16
                 Add(el);
             }
         }
-        public MyLinkedList(int capacity)
-        {
-            first = null;
-            last = null;
-            size = 0;
-        }
         public void Add(T el)
         {
             Node<T> newNode = new Node<T>(el);
@@ -54,12 +48,11 @@ namespace Task16
                 last = newNode;
             }
             size++;
-
         }
-        public void AddAll(T[] a)
+        public void AddAll(T[] array)
         {
-            foreach (T el in a)
-                Add(el);
+            foreach (T e in array)
+                Add(e);
         }
         public void Clear()
         {
@@ -72,26 +65,18 @@ namespace Task16
             Node<T>? step = first;
             while (step != null)
             {
-                if (step.value.Equals(o))
+                if (Equals(o, step.value))
                     return true;
                 step = step.next;
-
             }
             return false;
         }
         public bool ContainsAll(T[] array)
         {
-            bool[] check = new bool[array.Length];
-            Node<T>? step = first;
-            while (step != null)
+            foreach (T e in array)
             {
-                int i = 0;
-                if (step.Equals(array[i])) check[i] = true;
-                i++;
-                step = step.next;
+                if(!Contains(e)) return false;
             }
-            for (int i = 0; i < check.Length; i++)
-                if (!check[i]) return false;
             return true;
         }
         public bool Empty() => size == 0;
@@ -99,33 +84,131 @@ namespace Task16
         {
             if (Contains(obj))
             {
-                if (first.value.Equals((T)obj))
+                if (Equals(obj, first.value))
                 {
                     first = first.next;
                     size--;
                     return;
                 }
-                Node<T>? step = first;
-                while (step != null)
+                if(Equals(obj, last.value))
                 {
-                    if (step.next.value.Equals((T)obj))
+                    last = last.pred;
+                    size--;
+                    return;
+                }
+                Node<T>? step = first;
+                while (step.next != null)
+                {
+                    if (Equals(obj, step.next.value))
                     {
-                        step.next = step.next.next; size--; return;
+                        step.next = step.next.next;
+                        step.next.pred = step;
+                        size--; 
+                        return;
                     }
                     else step = step.next;
                 }
+            //    while (p->next != NULL)
+            //    {
+            //        if (p->next->info < 0)
+            //        {
+            //            list* r = p->next;
+            //            p->next = r->next;
+            //            delete r;
+            //        }
+            //        else p = p->next;
+            //    }
             }
         }
-        public void RemoveAll(T[] a)
+        public void RemoveAll(T[] array)
         {
-            foreach (T el in a)
-                Remove(el);
+            foreach (T e in array)
+                Remove(e);
+        }
+        public void RetainAll(T[] array)
+        {
+            for (int index = 0; index < size; index++)
+            {
+                int f = 0;
+                for (int j = 0; j < array.Length; j++)
+                {
+                    if (Equals(array[j], Get(index)))
+                    {
+                        f = 0;
+                        break;
+                    }
+                    else f = 1;
+                }
+                if (f == 1)
+                    Remove(Get(index));
+            }
+        }
+        public int Size() => size;
+        public T[] ToArray()
+        {
+            T[] array = new T[size];
+            for (int index = 0; index < size; index++)
+                array[index] = Get(index);
+            return array;
+        }
+        public T[] ToArray(ref T[] array)
+        {
+            if (array == null) return ToArray();
+            else
+            {
+                T[] newArray = new T[array.Length + size];
+                for (int i = 0; i < array.Length; i++)
+                    newArray[i] = array[i];
+                for (int i = array.Length; i < newArray.Length; i++)
+                    newArray[i] = Get(i);
+                return newArray;
+            }
+        }
+        public void Add(int index, T e)
+        {
+            if (index <= 0)
+            {
+                Node<T> step = new Node<T>(e);
+                step.next = first;
+                first.pred = step;
+                first = step;
+                return;
+            }
+            else if (index >= size)
+            {
+                Node<T> step = new Node<T>(e);
+                step.pred = last;
+                last.next = step;
+                last = step;
+                return;
+            }
+            else
+            {
+                int i = 0;
+                Node<T> step = new Node<T>(e);
+                step = first;
+                while (i != index)
+                {
+                    step = step.next;
+                    i++;
+                }
+                Node<T> el = new Node<T>(e);
+                el.next = step;
+                el.pred = step.pred;
+                step.pred.next = el;
+                step.pred = el;
+            }
+        }
+        public void AddAll(int index, T[] array)
+        {
+            for (int i = 0; i < array.Length; i++)
+                Add(index, array[i]);
         }
         public T Get(int index)
         {
             int curIndex = 0;
             if (index >= size)
-                throw new IndexOutOfRangeException();
+                throw new Exception();
             if (index == size - 1)
                 return last.value;
             if (index == 0)
@@ -138,48 +221,85 @@ namespace Task16
             }
             return step.value;
         }
-        public void RetainAll(T[] a)
+        public int IndexOf(T o)
         {
-            T[] tmp = new T[a.Length];
-            int ind = 0;
-            for (int i = 0; i < size; i++)
+            Node<T> step = new Node<T>(o);
+            step = first;
+            int index = 0;
+            while (step != null)
             {
-                int flag = 0;
-                for (int j = 0; j < a.Length; j++)
-                {
-                    if (Get(i).Equals(a[j]))
-                    {
-                        flag = 0;
-                        break;
-                    }
-                    else flag = 1;
-                }
-                if (flag == 1)
-                    Remove(Get(i));
+                if (step.value.Equals(o))
+                    return index;
+                index++;
+                step = step.next;
             }
+            return -1;
         }
-        public int Size() => size;
-        public T[] ToArray()
+        public int LastIndexOf(T o)
         {
-            T[] newAr = new T[size];
-            for (int i = 0; i < size; i++)
-                newAr[i] = Get(i);
-            return newAr;
+            Node<T> step = new Node<T>(o);
+            step = last;
+            int index = size-1;
+            while (step != null)
+            {
+                if (Equals(o, step.value)) 
+                    return index;
+                index--;
+                step = step.pred;
+            }
+            return -1;
         }
-        public T[] ToArray(T[]? a)
+        public T RemoveIndex(int index)
         {
-            if (a == null) return ToArray();
+            T temp = Get(index);
+            Remove(temp);
+            return temp;
+        }
+        public void Set(int index, T e)
+        {
+            Node<T> step = new Node<T>(e);
+            step = first;
+            int i = 0;
+            while (i != index)
+            {
+                i++;
+                step = step.next;
+            }
+            step.value = e;
+        }
+        public T[] SubList(int fromIndex, int toIndex)
+        {
+            if ((fromIndex < 0 || toIndex > size) || (toIndex < fromIndex))
+                throw new Exception();
             else
             {
-                T[] newAr = new T[a.Length + size];
-                for (int i = 0; i < a.Length; i++)
-                    newAr[i] = a[i];
-                for (int i = a.Length; i < newAr.Length; i++)
-                    newAr[i] = Get(i);
-                return newAr;
+                T[] array = new T[toIndex - fromIndex + 1];
+                Node<T> step = new Node<T>(first.value);
+                step = first;
+                int index = 0;
+                while (index != fromIndex)
+                {
+                    step = step.next;
+                    index++;
+                }
+                int indexOfArray = 0;
+                while (index <= toIndex)
+                {
+                    array[indexOfArray] = step.value;
+                    indexOfArray++;
+                    index++;
+                    step = step.next;
+                }
+                return array;
             }
         }
         public T Element() => first.value;
+        public bool Offer(T o)
+        {
+            Add(o);
+            if (Contains(o)) return true;
+            return false;
+        }
         public T Peek()
         {
             if (first == null)
@@ -192,18 +312,47 @@ namespace Task16
             Remove(first.value);
             return obj;
         }
+        public void AddFirst(T obj)
+        {
+            Add(0, obj);
+        }
+        public void AddLast(T obj)
+        {
+            Add(size, obj);
+        }
         public T GetFirst()
         {
             if (first == null)
-                throw new IndexOutOfRangeException();
+                throw new Exception();
             return first.value;
         }
         public T GetLast()
         {
             if (last == null)
-                throw new IndexOutOfRangeException();
+                throw new Exception();
             return last.value;
-
+        }
+        public bool OfferFirst(T obj)
+        {
+            AddFirst(obj);
+            if (Contains(obj)) return true;
+            return false;
+        }
+        public bool OfferLast(T obj)
+        {
+            AddLast(obj);
+            if (Contains(obj)) return true;
+            return false;
+        }
+        public T Pop()
+        {
+            T obj = first.value;
+            Remove(first.value);
+            return obj;
+        }
+        public void Push(T obj)
+        {
+            AddFirst(obj);
         }
         public T PeekFirst()
         {
@@ -241,153 +390,6 @@ namespace Task16
             Remove(last.value);
             return obj;
         }
-        public T Pop()
-        {
-            T obj = first.value;
-            Remove(first.value);
-            return obj;
-        }
-        public bool Offer(T obj)
-        {
-            Add(obj);
-            if (Contains(obj)) return true;
-            return false;
-        }
-        public void Add(int index, T obj)
-        {
-            if (index <= 0)
-            {
-                Node<T> step = new Node<T>(obj);
-                step.next = first;
-                first.pred = step;
-                first = step;
-                return;
-            }
-            else if (index >= size - 1)
-            {
-                Node<T> step = new Node<T>(obj);
-                step.pred = last;
-                last.next = step;
-                last = step;
-                return;
-            }
-            else
-            {
-                int tind = 0;
-                Node<T> step = new Node<T>(obj);
-                step = first;
-                while (tind != index)
-                {
-                    step = step.next;
-                    tind++;
-                }
-                if (tind == index)
-                {
-                    Node<T> el = new Node<T>(obj);
-                    el.next = step;
-                    el.pred = step.pred;
-                    step.pred.next = el;
-                    step.pred = el;
-                }
-            }
-        }
-        public void AddAll(int index, T[] a)
-        {
-            for (int i = a.Length - 1; i >= 0; i--)
-                Add(index, a[i]);
-        }
-        public int IndexOf(T o)
-        {
-            Node<T> step = new Node<T>(o);
-            step = first;
-            int i = 0;
-            while (step != null)
-            {
-                if (step.value.Equals(o))
-                    return i;
-                i++;
-                step = step.next;
-            }
-            return -1;
-        }
-        public int LastIndexOf(T obj)
-        {
-            Node<T> step = new Node<T>(obj);
-            step = first;
-            int retInd = -1;
-            int ind = 0;
-            while (step != null)
-            {
-                if (step.value.Equals(obj)) retInd = ind;
-                ind++;
-                step = step.next;
-            }
-            return retInd;
-        }
-        public T RemoveIndex(int index)
-        {
-            T obj = Get(index);
-            Remove(obj);
-            return obj;
-        }
-        public void Set(int index, T obj)
-        {
-            Node<T> step = new Node<T>(obj);
-            step = first;
-            int ind = 0;
-            while (ind != index)
-            {
-                ind++;
-                step = step.next;
-            }
-            step.value = obj;
-        }
-        public T[] SubList(int fromIndex, int toIndex)
-        {
-            T[] a = new T[toIndex - fromIndex + 1];
-            Node<T> step = new Node<T>(first.value);
-            step = first;
-            int ind1 = 0;
-            while (ind1 != fromIndex)
-            {
-                step = step.next;
-                ind1++;
-            }
-            int ind2 = 0;
-            while (ind1 <= toIndex)
-            {
-                ind2++;
-                ind1++;
-                a[ind2] = step.value;
-                step = step.next;
-            }
-            return a;
-
-        }
-        public void AddFirst(T obj)
-        {
-            Add(0, obj);
-        }
-        public void AddLast(T obj)
-        {
-            Add(size - 1, obj);
-        }
-        public bool OfferFirst(T obj)
-        {
-            AddFirst(obj);
-            if (Contains(obj)) return true;
-            return false;
-        }
-        public bool OfferLast(T obj)
-        {
-            AddLast(obj);
-            if (Contains(obj)) return true;
-            return false;
-        }
-        public void Push(T obj)
-        {
-            AddFirst(obj);
-        }
         public bool RemoveLastOccurrence(T obj)
         {
             int ind = LastIndexOf(obj);
@@ -407,29 +409,6 @@ namespace Task16
                 return true;
             }
             return false;
-        }
-        public void Print()
-        {
-            Node<T> step = new Node<T>(first.value);
-            step = first;
-            while (step != null)
-            {
-                Console.WriteLine($"{step.value}");
-                step = step.next;
-            }
-        }
-    }
-    class program
-    {
-        static void Main(string[] args)
-        {
-            var list = new MyLinkedList<int>();
-            for(int i = 7; i <= 10; i++)
-            {
-                list.Add(i);
-            }
-            list.Add(10, 1);
-            list.Print();
         }
     }
 }
