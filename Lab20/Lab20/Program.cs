@@ -2,43 +2,37 @@
 using MyHashMap;
 public class Var
 {
-    enum TypeEnum
-    {
-        Integer,
-        Double,
-        Float
-    }
     static void Main(string[] args)
     {
-        try
+        MyHashMap<string, string> variableAndType = new MyHashMap<string, string>();
+        MyHashMap<string, string> variableAndValue = new MyHashMap<string, string>();
+        string pattern = @"(double|int|float) \S* ?(?:=) ?(\S)+?(?=;)";
+        string path = "input.txt";
+        StreamReader sr = new StreamReader(path);
+        string? line = sr.ReadLine();
+        if (line == null) Console.WriteLine("Строчка пуста");
+        while (line != null)
         {
-            MyHashMap<string, string> variable = new MyHashMap<string, string>();
-            string pattern = @"(double|int|float) \S* ?(?:=) ?(\S)+?(?=;)";
-            string path = "input.txt";
-            StreamReader sr = new StreamReader(path);
-            string? line = sr.ReadLine();
-            if (line == null) Console.WriteLine("Строчка пуста");
-            while (line != null)
+            MatchCollection matches = Regex.Matches(line, pattern);
+            foreach (Match match in matches)
             {
-                MatchCollection matches = Regex.Matches(line, pattern);
-                foreach (Match match in matches)
+                string[] parts = match.Value.Split(' ');
+                string type = parts[0].Trim();
+                string valuable = parts[3].Trim();
+                string name = parts[1].Trim();
+                if (variableAndType.ContainsKey(name)) Console.WriteLine("повтор" + " " + $"{type} {name}={valuable}");
+                else
                 {
-                    string[] parts = match.Value.Split(' ');
-                    string type = parts[0].Trim();
-                    string valuable = parts[3].Trim();
-                    string name = parts[1].Trim();
-                    string nameValue = parts[1].Trim() + "(" + valuable + ")";
-                    if (variable.ContainsKey(nameValue)) Console.WriteLine("повтор" + " " + $"{type} {name}={valuable}");
-                    else variable.Put(nameValue, type);
+                    variableAndType.Put(name, type);
+                    variableAndValue.Put(name, valuable);
                 }
-                line = sr.ReadLine();
             }
-            sr.Close();
-            var keys = variable.KeySet().ToArray();
-            for (int i = 0; i < keys.Length; i++)
-                Console.WriteLine(variable.Get(keys[i]) + " => " + keys[i]);
+            line = sr.ReadLine();
         }
-        catch (Exception ex) { Console.WriteLine("Exception : " + ex.Message); }
-
+        sr.Close();
+        var values = variableAndValue.KeySet().ToArray();
+        var keys = variableAndValue.KeySet().ToArray();
+        for (int i = 0; i < keys.Length; i++)
+            Console.WriteLine(variableAndType.Get(keys[i]) + " => " + $"{values[i]}" + $"({variableAndValue.Get(values[i])})");
     }
 }
