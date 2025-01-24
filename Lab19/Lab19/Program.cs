@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 namespace Lab19
 {
-    public class Lab5
+    public class Teg
     {
         static string file = "input.txt";
         static StreamReader sr = new StreamReader(file);
