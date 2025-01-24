@@ -21,13 +21,13 @@
         {
             table = new Entry[16];
             size = 0;
-            this.loadFactor = 0.75;
+            loadFactor = 0.75;
         }
         public MyHashMap(int initialCapacity)
         {
             table = new Entry[initialCapacity];
             size = 0;
-            this.loadFactor = 0.75;
+            loadFactor = 0.75;
         }
         public MyHashMap(int initialCapacity, double loadFactor)
         {
