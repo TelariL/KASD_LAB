@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Data;
 
-namespace Task16
+namespace Lab16
 {
     public class MyLinkedList<T>
     {
