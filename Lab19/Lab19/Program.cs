@@ -22,22 +22,23 @@ namespace Lab19
                     if (line[i] == '<' && line[i + 1] != null)
                     {
                         if (line[i + 1] == '/' || char.IsLetter(line[i + 1]) && !isOpen) { isOpen = true; }
-                        if (line[i + 1] == '>') { isOpen = true; }
                     }
                     if (line[i] == '>' && isOpen == true) { teg += line[i]; isTeg = true; isOpen = false; }
                     if (isOpen && (line[i] == '<' || line[i] == '/' || char.IsLetter(line[i]) || char.IsDigit(line[i]))) teg += line[i];
                     if (isTeg) 
                     {
-                        if (result.ContainsKey(teg))
+                        string replacedTeg = teg.Replace("/", "");
+                        string lowerTeg = replacedTeg.ToLower();
+                        if (result.ContainsKey(lowerTeg))
                         {
-                            int cnt = result.Get(teg);
-                            result.PutValue(teg, cnt + 1);
+                            int cnt = result.Get(lowerTeg);
+                            result.PutValue(lowerTeg, cnt + 1);
                         }
                         else
                         {
-                            result.Put(teg, 1);
+                            result.Put(lowerTeg, 1);
                         }
-                        teg = ""; 
+                        teg = "";
                         isTeg = false; 
                     }
                 }
