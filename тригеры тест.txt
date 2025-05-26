@@ -1,0 +1,51 @@
+SELECT * FROM "Камеры видеонаблюдения" WHERE "ID камеры" = 10000
+INSERT INTO "Камеры видеонаблюдения"("ID камеры", "Местонахождение камер", "Качество изображения", "Модель камеры") VALUES (12000, 'da', '4k', 'model');
+
+CREATE OR REPLACE FUNCTION validate_ohranik_data() 
+RETURNS TRIGGER AS $$
+
+BEGIN
+    IF NEW."ID охранника" > 4999 OR NEW."ID охранника" < 4000 THEN
+        RAISE EXCEPTION 'ID не подходит';
+    END IF;
+	IF NEW."ФИО" IS NULL THEN
+        RAISE EXCEPTION 'ФИО не может быть пустым';
+	END IF;
+	IF NEW."Дата рождения" IS NULL THEN
+        RAISE EXCEPTION 'Дата рождения не может быть пустой';
+	END IF;
+	IF NEW."Стаж работы" IS NULL THEN
+        RAISE EXCEPTION 'Стаж работы не может быть пустым';
+	END IF;
+    IF NEW."ID организации" > 3049 OR NEW."ID организации" < 3000 THEN
+        RAISE EXCEPTION 'Организации не существует';
+    END IF;
+    RETURN NEW;
+END;
+
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER before_student_insert
+BEFORE INSERT ON public."Охранник"
+FOR EACH ROW EXECUTE FUNCTION validate_ohranik_data();
+
+INSERT INTO "Охранник"("ID охранника", "ФИО", "Дата рождения", "Стаж работы", "ID организации") VALUES (4054,'fsdfsd','2025-05-26'::DATE,'223',3048)
+
+
+CREATE OR REPLACE FUNCTION soft_delete_report()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF (OLD.IsDeleted = FALSE) THEN
+        UPDATE public."Отчет" SET IsDeleted = TRUE WHERE "Номер отчета" = OLD."Номер отчета";
+        RAISE NOTICE 'Выполнено мягкое удаление отчета';
+        RETURN NULL;
+    END IF;
+    RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER before_report_delete
+BEFORE DELETE ON public."Отчет"
+FOR EACH ROW EXECUTE FUNCTION soft_delete_report();
+
+DELETE FROM "Отчет" WHERE "Номер отчета" = 1;
